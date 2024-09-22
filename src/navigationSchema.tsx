@@ -31,8 +31,13 @@ export const NAVIGATION: Navigation = [
         icon: <DescriptionIcon/>,
       },
       {
-        segment: 'transactions',
-        title: 'Transactions',
+        segment: 'top5',
+        title: 'Top 5 PL accounts',
+        icon: <DescriptionIcon/>,
+      },
+      {
+        segment: 'grouped',
+        title: 'Grouped report',
         icon: <DescriptionIcon/>,
       },
     ],

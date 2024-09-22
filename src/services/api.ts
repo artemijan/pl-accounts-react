@@ -15,3 +15,5 @@ export const getUserInfo = () => api.get('/auth/userinfo');
 
 export const logout = () =>
   api.get('/auth/logout');
+
+export const getReport = () => api.get('/transactions/report');

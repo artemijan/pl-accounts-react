@@ -1,6 +1,3 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
 import {AppProvider} from '@toolpad/core/AppProvider';
 import {DashboardLayout} from '@toolpad/core/DashboardLayout';
 import {AuthProvider, Router, SignInPage} from '@toolpad/core';
@@ -9,22 +6,7 @@ import demoTheme from "./theme.ts"
 import {useEffect, useMemo, useState} from "react";
 import {getUserInfo, login} from "./services/api.ts";
 import SignOut from "./components/SignOut.tsx";
-
-function DemoPageContent({pathname}: { pathname: string }) {
-  return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography>Dashboard content for {pathname}</Typography>
-    </Box>
-  );
-}
+import {DashboardContent} from "./components/DashboardContent.tsx";
 
 interface DemoProps {
   /**
@@ -34,7 +16,7 @@ interface DemoProps {
   window?: () => Window;
 }
 
-export default function DashboardLayoutBasic(props: DemoProps) {
+export default function DashboardLayoutBase(props: DemoProps) {
   const {window} = props;
 
   const [pathname, setPathname] = useState('/dashboard');
@@ -115,10 +97,9 @@ export default function DashboardLayoutBasic(props: DemoProps) {
             providers={[{id: 'credentials', name: 'Email and Password'}]}
           /> :
           <DashboardLayout slots={{toolbarActions: SignOut}}>
-            <DemoPageContent pathname={pathname}/>
+            <DashboardContent pathname={pathname}/>
           </DashboardLayout>
       }
-
     </AppProvider>
     // preview-end
   );
