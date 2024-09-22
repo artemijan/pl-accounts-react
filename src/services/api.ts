@@ -10,5 +10,8 @@ export const uploadCSV = (formData: FormData) => api.post('/csv', formData);
 export const getTopPLAccounts = () =>
   api.get(`/transactions/report`);
 export const login = (username: string, password: string) =>
-  api.post('/auth/login', { username, password });
+  api.post('/auth/login', {username, password});
 export const getUserInfo = () => api.get('/auth/userinfo');
+
+export const logout = () =>
+  api.get('/auth/logout');

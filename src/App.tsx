@@ -8,6 +8,7 @@ import {NAVIGATION} from "./navigationSchema.tsx";
 import demoTheme from "./theme.ts"
 import {useEffect, useMemo, useState} from "react";
 import {getUserInfo, login} from "./services/api.ts";
+import SignOut from "./components/SignOut.tsx";
 
 function DemoPageContent({pathname}: { pathname: string }) {
   return (
@@ -51,14 +52,21 @@ export default function DashboardLayoutBasic(props: DemoProps) {
   const signIn: (provider: AuthProvider, formData: FormData) => void = async (_: AuthProvider, formData: FormData) => {
     const username = formData?.get('email')?.toString();
     const password = formData?.get('password')?.toString();
+
     if (username && password) {
+      setIsLoading(true);
       return login(username, password)
+        .then(() => {
+          setIsLoggedIn(true);
+        })
         .catch(() => {
           return {
             type: 'CredentialsSignin',
-            error: 'Invalid credentials.',
+            error: 'Invalid credentials.'
           };
-        });
+        }).finally(() => {
+          setIsLoading(false);
+        })
     }
     return Promise.reject({
       type: 'CredentialsSignin',
@@ -89,6 +97,9 @@ export default function DashboardLayoutBasic(props: DemoProps) {
     // preview-start
     <AppProvider
       navigation={NAVIGATION}
+      branding={{
+        title: 'PIS',
+      }}
       router={router}
       loading={isLoading}
       theme={demoTheme}
@@ -103,7 +114,7 @@ export default function DashboardLayoutBasic(props: DemoProps) {
             }}
             providers={[{id: 'credentials', name: 'Email and Password'}]}
           /> :
-          <DashboardLayout>
+          <DashboardLayout slots={{toolbarActions: SignOut}}>
             <DemoPageContent pathname={pathname}/>
           </DashboardLayout>
       }
